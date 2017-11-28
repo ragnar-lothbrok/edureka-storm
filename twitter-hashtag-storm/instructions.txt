@@ -1,0 +1,2 @@
+1. Change keys in Twitter Constants
+2. For filtering change in Twitter Spout
