@@ -1,0 +1,1 @@
+https://raw.githubusercontent.com/gonet2/geoip/master/GeoIP2-City.mmdb
