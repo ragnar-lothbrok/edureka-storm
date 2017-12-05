@@ -1,9 +1,6 @@
 package com.edureka.storm;
 
-import com.edureka.storm.bolts.CassandraBolt;
 import com.edureka.storm.bolts.MySQLDumpBolt;
-import com.edureka.storm.helpers.CassandraHelper;
-import com.edureka.storm.helpers.ProductRepository;
 import com.edureka.storm.schemes.ProductScheme;
 
 import backtype.storm.Config;
@@ -29,11 +26,9 @@ public class ProductTopology {
 
 		builder.setSpout("kafka-spout", kafkaSpout);
 
-		ProductRepository.session = new CassandraHelper().getSession("Test Cluster", "edureka", "localhost");
-
-		builder.setBolt("cassandra-bolt", new CassandraBolt()).shuffleGrouping("kafka-spout");
-
-		builder.setBolt("sql-bolt", new MySQLDumpBolt("localhost:3306", "catalog", "root", "")).shuffleGrouping("kafka-spout");
+		//url , database name , username , password
+		builder.setBolt("sql-bolt", new MySQLDumpBolt("localhost:3306", "catalog", "root", ""))
+				.shuffleGrouping("kafka-spout");
 
 		final LocalCluster cluster = new LocalCluster();
 		cluster.submitTopology(TOPOLOGY_NAME, new Config(), builder.createTopology());
